@@ -23,6 +23,18 @@ This system demonstrates how workflow automation can reduce repetitive administr
 
 ## Workflow Architecture
 
+### Main n8n Workflow
+
+![PrimeHome Realty main workflow](screenshots/primehome-main-workflow.png%202.png)
+
+### Successful Execution
+
+![PrimeHome Realty successful execution](screenshots/primehome-successful-execution.png)
+
+### Error-Handling Workflow
+
+![PrimeHome Realty error-handling workflow](screenshots/primehome-error-handling-workflow.png)
+
 ```mermaid
 flowchart TD
     A[Incoming Property Inquiry] --> B[Webhook]
