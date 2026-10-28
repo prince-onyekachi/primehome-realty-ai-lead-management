@@ -24,28 +24,27 @@ This system demonstrates how workflow automation can reduce repetitive administr
 ## Workflow Architecture
 
 ```text
-Incoming Property Inquiry
-          |
-        Webhook
-          |
-    Input Validation
-          |
-      Is Valid?
-       /     \
-     No       Yes
-     |         |
- Invalid     AI Lead
-   Alert   Qualification
-               |
-       Validate AI Output
-               |
-       Qualification Status
-          /          \
-    Qualified      Other Status
-        |                |
-   HubSpot CRM      Unqualified
-        |              Alert
- Qualified Alert
+
+flowchart TD
+    A[Incoming Property Inquiry] --> B[Webhook]
+    B --> C[Input Validation]
+    C --> D{Is the lead valid?}
+
+    D -- No --> E[Invalid Lead Alert - Gmail]
+    D -- Yes --> F[AI Qualification - OpenAI]
+
+    F --> G[Validate AI Output]
+    G --> H{Qualification Status}
+
+    H -- Qualified --> I[Create or Update Contact - HubSpot]
+    I --> J[Qualified Lead Notification - Gmail]
+
+    H -- Other status --> K[Unqualified Lead Alert - Gmail]
+
+    L[Separate Error Workflow] --> M[Error Trigger]
+    M --> N[Failure Alert - Gmail]
+
+
 ```
 
 A separate error-handling workflow listens for workflow failures and sends Gmail alerts.
