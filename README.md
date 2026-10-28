@@ -25,15 +25,15 @@ This system demonstrates how workflow automation can reduce repetitive administr
 
 ### Main n8n Workflow
 
-![PrimeHome Realty main workflow](screenshots/primehome-main-workflow.png%202.png)
+![PrimeHome Realty main workflow](primehome-main-workflow.png%202.png)
 
 ### Successful Execution
 
-![PrimeHome Realty successful execution](screenshots/primehome-successful-execution.png)
+![PrimeHome Realty successful execution](primehome-successful-execution.png)
 
 ### Error-Handling Workflow
 
-![PrimeHome Realty error-handling workflow](screenshots/primehome-error-handling-workflow.png)
+![PrimeHome Realty error-handling workflow](primehome-error-handling-workflow.png)
 
 ```mermaid
 flowchart TD
