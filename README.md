@@ -108,6 +108,39 @@ Recent main-workflow executions checked during verification showed successful re
 
 **Testing note:** The deliberate failure test used a separate test workflow configured to use the error-handling workflow.
 
+## Sample Input and Output
+### Sample Input
+
+The workflow receives a real-estate inquiry through its webhook.
+
+```json
+{
+  "name": "Sarah Johnson",
+  "email": "sarah.johnson@example.com",
+  "phone": "+2348012345678",
+  "location": "Lekki Phase 1, Lagos",
+  "budget": "₦60,000,000–₦100,000,000",
+  "message": "I am looking for a 3-bedroom apartment in Lekki Phase 1 with a budget of ₦80,000,000. I would like to arrange a viewing this weekend and hope to buy within two weeks."
+}
+```
+### Sample AI Output
+
+After analysing the inquiry, the AI qualification step produces a structured result:
+
+```json
+{
+  "buying_intent": "high",
+  "property_type": "3-bedroom apartment",
+  "location": "Lekki Phase 1",
+  "budget_min": 60000000,
+  "budget_max": 100000000,
+  "timeframe": "within two weeks",
+  "lead_score": 90,
+  "qualification_status": "Qualified",
+  "recommended_action": "Set up property viewings"
+}
+```
+
 ## Limitations and Future Improvements
 
 Potential improvements include:
