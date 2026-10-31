@@ -162,3 +162,13 @@ This repository documents the project. Before publishing workflow exports, remov
 This project demonstrates hands-on practice with webhook integrations, JavaScript validation, AI-assisted classification, conditional routing, CRM integration, email notifications, and error handling.
 
 It is a portfolio demonstration using a fictional real estate company, not a claim of deployment for a real estate client.
+
+## Live Demo / How to Test
+This project is documented with workflow screenshots and sample data so visitors can understand how it works without needing access to my n8n account.
+### How to Test the Workflow
+1. Review the workflow architecture diagram above to understand how the system operates.
+2. Examine the sample lead input and AI output to see how incoming property inquiries are processed.
+3. View the workflow screenshots to understand the n8n nodes, connections, and execution results.
+4. Use the documented test scenarios to understand how qualified, unqualified, and invalid leads are handled.
+
+ Note: The live n8n workflow is not publicly accessible. The screenshots, architecture diagram, and sample data provide a demonstration of the system without requiring access to the original n8n account.
