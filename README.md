@@ -1,117 +1,118 @@
-# PrimeHome Realty — AI Lead Management System
+# PrimeHome Realty — AI-Powered Real Estate Lead Management
 
-An AI-powered real estate lead management automation built with n8n, OpenAI, HubSpot, and Gmail.
+An AI automation portfolio project built with **n8n, OpenAI, HubSpot, Gmail, webhooks, and JavaScript**.
 
-## Project Overview
+Automatically validate property enquiries, assess buyer intent, route leads according to qualification status, update CRM contacts, and notify the relevant team.
 
-PrimeHome Realty is a fictional real estate business used to demonstrate practical AI automation skills.
+> **Project type:** Portfolio demonstration using a fictional real estate company. This project demonstrates hands-on automation skills and is not presented as a deployment for a paying client.
 
-This project automates the initial handling of property inquiries, validates incoming lead data, uses AI to assess buyer intent, routes leads according to their qualification status, updates the CRM for qualified leads, and sends email notifications.
+## Overview
+
+Real estate agencies receive enquiries from prospective buyers with different budgets, preferences, and purchase timelines. Manually reviewing and organizing these enquiries can create repetitive administrative work and make consistent lead handling more difficult.
+
+This project demonstrates an automated approach to the initial lead management process.
+
+The workflow receives property enquiries, validates contact information, uses AI to assess buying intent, routes leads according to their qualification status, updates HubSpot for qualified leads, and sends email notifications.
 
 A separate error-handling workflow sends email alerts when workflow executions fail.
 
 ## Business Problem
 
-Manually processing property inquiries can lead to:
-- Invalid or incomplete contact information.
-- Delays in identifying serious buyers.
+The workflow addresses common operational challenges:
+
+- Incomplete or invalid lead information.
+- Manual review of incoming property enquiries.
 - Inconsistent lead qualification.
-- Missed CRM updates and follow-ups.
-- Limited visibility into automation failures.
+- Repetitive CRM data entry.
+- Delayed internal notifications.
+- Limited visibility into workflow failures.
 
-This system demonstrates how workflow automation can reduce repetitive administrative tasks and support more consistent lead management.
-
-## Workflow Architecture
+## Workflow Demonstration
 
 ### Main n8n Workflow
 
-![PrimeHome Realty main workflow](primehome-main-workflow.png%202.png)
+![PrimeHome Realty main workflow](<./primehome-main-workflow.png 2.png>)
+
+The main workflow connects webhook intake, data validation, AI qualification, conditional routing, HubSpot CRM updates, and Gmail notifications.
 
 ### Successful Execution
 
-![PrimeHome Realty successful execution](primehome-successful-execution.png)
+![PrimeHome Realty successful execution](./primehome-successful-execution.png)
+
+This screenshot provides evidence of a successful workflow execution during testing.
 
 ### Error-Handling Workflow
 
-![PrimeHome Realty error-handling workflow](primehome-error-handling-workflow.png)
+![PrimeHome Realty error-handling workflow](./primehome-error-handling-workflow.png)
 
-```mermaid
-flowchart TD
-    A[Incoming Property Inquiry] --> B[Webhook]
-    B --> C[Input Validation]
-    C --> D{Is the lead valid?}
-    D -- No --> E[Invalid Lead Alert - Gmail]
-    D -- Yes --> F[AI Qualification - OpenAI]
-    F --> G[Validate AI Output]
-    G --> H{Qualification Status}
-    H -- Qualified --> I[Create or Update Contact - HubSpot]
-    I --> J[Qualified Lead Notification - Gmail]
-    H -- Other status --> K[Unqualified Lead Alert - Gmail]
-    L[Separate Error Workflow] --> M[Error Trigger]
-    M --> N[Failure Alert - Gmail]
-```
+A separate workflow listens for configured workflow failures and sends an email alert containing available execution and error details.
 
-A separate error-handling workflow listens for workflow failures and sends Gmail alerts.
+## How It Works
+
+1. **Lead intake:** An HTTP POST webhook receives a property enquiry.
+2. **Data validation:** JavaScript checks required fields and email format.
+3. **AI qualification:** OpenAI analyses the enquiry and generates structured qualification data.
+4. **Output validation:** The workflow checks required AI-generated fields and the lead score.
+5. **Conditional routing:** Leads follow different paths according to validation and qualification results.
+6. **CRM integration:** Qualified leads are created or updated in HubSpot, using email to identify the contact.
+7. **Email notifications:** Gmail sends notifications for qualified leads, invalid submissions, and other qualification outcomes.
+8. **Error alerts:** A separate error-handling workflow sends notifications when a configured workflow execution fails.
 
 ## Key Features
 
-### 1. Webhook Lead Intake
-Receives property inquiries through an HTTP POST webhook.
+### Webhook Integration
 
-### 2. Input Validation
-JavaScript checks required fields and email format before the inquiry proceeds.
+Receives property enquiries through an HTTP POST endpoint.
 
-### 3. AI Lead Qualification
-OpenAI assesses:
+### JavaScript Validation
+
+Checks required contact information and email format before processing continues.
+
+### AI-Powered Lead Qualification
+
+Uses OpenAI to extract and assess:
+
 - Buying intent.
-- Property type and preferred location.
+- Property type.
+- Preferred location.
 - Budget range.
 - Purchase timeline.
 - Lead score from 0 to 100.
 - Qualification status.
-- Recommended next action and reasoning.
+- Recommended next action.
 
-### 4. Conditional Routing
-The workflow routes invalid submissions, qualified leads, and other qualification outcomes through separate paths.
+### Conditional Routing
 
-### 5. HubSpot CRM Integration
-Qualified leads are created or updated in HubSpot using their email address to identify the contact. Relevant contact and property information is mapped to CRM fields.
+Separates invalid submissions, qualified leads, and other qualification outcomes.
 
-### 6. Email Notifications
-Gmail sends notifications for qualified leads, invalid submissions, and unqualified inquiries.
+### HubSpot CRM Integration
 
-### 7. Error Handling
-A separate n8n workflow sends an email alert containing available execution and error details when a workflow failure occurs.
+Creates or updates qualified contacts and maps relevant lead information to CRM fields.
+
+### Automated Email Notifications
+
+Sends notifications for qualified leads, invalid submissions, and other qualification outcomes.
+
+### Error Handling
+
+Uses a separate n8n error workflow to send email alerts when configured workflow executions fail.
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
 | n8n | Workflow orchestration |
-| Webhooks | Lead intake |
-| JavaScript | Validation and data processing |
+| Webhooks | Incoming lead capture |
+| JavaScript | Input validation and AI output processing |
 | OpenAI | AI-assisted lead qualification |
 | HubSpot | CRM contact management |
 | Gmail | Notifications and error alerts |
 
-## Testing and Verification
+## Sample Lead
 
-The following behaviors have been tested:
-- Valid inquiries proceeding through the workflow.
-- Invalid email submissions being rejected and reported.
-- Qualified leads being saved to HubSpot and generating email notifications.
-- Unqualified leads generating their own notifications.
-- Repeat submissions using the same email updating the existing HubSpot contact in the tested scenario.
-- The separate error-handling workflow sending an alert after a deliberately failed test workflow.
+The following fictional enquiry illustrates the type of information the workflow processes.
 
-Recent main-workflow executions checked during verification showed successful results.
-
-**Testing note:** The deliberate failure test used a separate test workflow configured to use the error-handling workflow.
-
-## Sample Input and Output
-### Sample Input
-
-The workflow receives a real-estate inquiry through its webhook.
+### Example Input
 
 ```json
 {
@@ -119,13 +120,12 @@ The workflow receives a real-estate inquiry through its webhook.
   "email": "sarah.johnson@example.com",
   "phone": "+2348012345678",
   "location": "Lekki Phase 1, Lagos",
-  "budget": "₦60,000,000–₦100,000,000",
-  "message": "I am looking for a 3-bedroom apartment in Lekki Phase 1 with a budget of ₦80,000,000. I would like to arrange a viewing this weekend and hope to buy within two weeks."
+  "budget": "60000000-100000000 NGN",
+  "message": "I am looking for a 3-bedroom apartment in Lekki Phase 1 with a budget of 80000000 NGN. I would like to arrange a viewing this weekend and hope to buy within two weeks."
 }
 ```
-### Sample AI Output
 
-After analysing the inquiry, the AI qualification step produces a structured result:
+### Example AI Output
 
 ```json
 {
@@ -141,34 +141,92 @@ After analysing the inquiry, the AI qualification step produces a structured res
 }
 ```
 
+This is an illustrative example of structured AI output, not a guarantee that every enquiry will produce the same result.
+
+## Testing and Verification
+
+The following behaviors have been tested:
+
+- Valid enquiries proceeding through the workflow.
+- Invalid email submissions being rejected and reported.
+- Qualified leads being saved to HubSpot and generating email notifications.
+- Other qualification outcomes generating their corresponding notifications.
+- Repeat submissions using the same email updating the existing HubSpot contact in the tested scenario.
+- A separate test workflow deliberately failing and triggering the configured error-handling workflow.
+
+Recent main-workflow executions checked during verification showed successful results.
+
+**Testing note:** The deliberate failure test used a separate test workflow configured to use the error-handling workflow.
+
+## How to Review the Project
+
+The live n8n workflow is not publicly accessible. You can review the implementation through the documentation and screenshots in this repository.
+
+1. Review the workflow screenshots above.
+2. Examine the sample lead input and structured AI output.
+3. Follow the workflow architecture and feature descriptions.
+4. Review the documented testing scenarios.
+
+A short recorded walkthrough can also be added here when available.
+
+**Demo video:** To be added.
+
 ## Limitations and Future Improvements
 
 Potential improvements include:
+
 - Preventing duplicate notifications for repeated submissions.
 - Storing lead history in a database.
-- Adding controlled follow-up sequences.
-- Introducing human approval for uncertain AI assessments.
-- Implementing retry logic for temporary integration failures.
-- Adding monitoring dashboards and broader failure testing.
+- Implementing controlled follow-up sequences.
+- Adding human approval for uncertain AI assessments.
+- Introducing retry logic for temporary integration failures.
+- Expanding automated tests and monitoring.
+- Adding reporting dashboards for lead processing.
 
-AI qualification is an aid to decision-making, not a guarantee that a prospect will purchase a property.
+AI-generated qualification scores support prioritization; they do not guarantee that a prospect will purchase a property.
 
-## Security
+## Security Considerations
 
-This repository documents the project. Before publishing workflow exports, remove credentials, API keys, access tokens, private webhook URLs, and personal information. Use fictional test data in public demonstrations.
+Before sharing workflow exports or screenshots publicly:
 
-## Project Outcome
+- Remove API keys, access tokens, and credentials.
+- Remove private webhook URLs and sensitive configuration.
+- Use fictional contact information in public examples.
+- Never commit active credentials or `.env` files.
 
-This project demonstrates hands-on practice with webhook integrations, JavaScript validation, AI-assisted classification, conditional routing, CRM integration, email notifications, and error handling.
+## What This Project Demonstrates
 
-It is a portfolio demonstration using a fictional real estate company, not a claim of deployment for a real estate client.
+This portfolio project demonstrates practical experience with:
 
-## Live Demo / How to Test
-This project is documented with workflow screenshots and sample data so visitors can understand how it works without needing access to my n8n account.
-### How to Test the Workflow
-1. Review the workflow architecture diagram above to understand how the system operates.
-2. Examine the sample lead input and AI output to see how incoming property inquiries are processed.
-3. View the workflow screenshots to understand the n8n nodes, connections, and execution results.
-4. Use the documented test scenarios to understand how qualified, unqualified, and invalid leads are handled.
+- n8n workflow development.
+- Webhook-based integrations.
+- JavaScript data validation.
+- OpenAI structured output processing.
+- Conditional workflow routing.
+- HubSpot CRM integration.
+- Gmail notifications.
+- Workflow error handling and testing.
 
- Note: The live n8n workflow is not publicly accessible. The screenshots, architecture diagram, and sample data provide a demonstration of the system without requiring access to the original n8n account.
+The project is intended to demonstrate technical capabilities and provide a foundation for similar business automation solutions.
+
+## Interested in a Similar Automation?
+
+I build AI-assisted business workflows that help organize incoming enquiries, automate repetitive processes, and connect business tools.
+
+If your real estate agency needs help with lead qualification, CRM updates, enquiry routing, or email notifications, feel free to connect with me.
+
+## Contact
+
+Interested in working together on AI automation projects?
+
+- **Email:** onyekachiopk@gmail.com
+- **LinkedIn:** [Prince Onyekachi](https://www.linkedin.com/in/prince-onyekachi-b2405a3b2/)
+- **GitHub:** [prince-onyekachi](https://github.com/prince-onyekachi)
+
+I'm open to discussing AI automation projects involving n8n, OpenAI, lead qualification, CRM integrations, and business process automation.
+
+If you're looking to automate repetitive business processes, improve lead management, or connect your existing business tools, feel free to reach out.
+
+---
+
+*Built as an AI automation portfolio project by Prince Onyekachi.*
