@@ -167,9 +167,11 @@ The live n8n workflow is not publicly accessible. You can review the implementat
 3. Follow the workflow architecture and feature descriptions.
 4. Review the documented testing scenarios.
 
-A short recorded walkthrough can also be added here when available.
+## Demo Video
 
-**Demo video:** To be added.
+Watch the full project demonstration:
+
+[PrimeHome Realty — AI-Powered Real Estate Lead Management & Automation System](https://www.loom.com/share/fdaea6c36892417fbacd4cb74adff815)
 
 ## Limitations and Future Improvements
 
